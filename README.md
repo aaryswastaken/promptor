@@ -1,7 +1,5 @@
 # promptor
 
----
-
 Simple web based teleprompter
 
 ## How to run
