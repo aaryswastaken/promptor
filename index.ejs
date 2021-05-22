@@ -1,0 +1,70 @@
+<div id="ctn">
+<select id="select"></select>
+
+<button id="goTo">Start</button>
+</div>
+
+<style>
+    body {
+        font-size: 2em;
+    }
+
+    #ctn {
+        margin-top: 150px;
+    }
+</style>
+
+<script>
+    let files = "<%= files%>".split(",").map(n => n.split(".")[0]);
+
+    console.log(files);
+
+    let selections = "";
+
+    files.forEach((file) => {
+        selections += `<option value="${file}">${file}</option>"`;
+    });
+
+    console.log({selections});
+    document.getElementById("select").innerHTML = selections;
+
+    let x = () => {
+        window.location = "/text?file="+document.getElementById("select").value;
+    }
+
+    document.getElementById("goTo").onclick = x;
+
+    document.body.addEventListener("keypress", (evt) => {
+        console.log(evt);
+
+        switch (evt.code.toLowerCase()) {
+            case "keys":
+                x();
+                break;
+        }
+
+        let i = -1;
+
+        switch (evt.key) {
+            case "&":
+                i = 1;
+                break;
+            case "é":
+                i = 2;
+                break;
+            case "\"":
+                i = 3;
+                break;
+            case "'":
+                i = 4;
+                break;
+            case "(":
+                i = 5;
+                break;
+        }
+
+        if(i !== -1 ) {
+            document.getElementById("select").value = files[i-1];
+        }
+    })
+</script>

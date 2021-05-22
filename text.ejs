@@ -1,0 +1,70 @@
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<div id="ctn">
+    <div id="container"></div>
+</div>
+
+<style>
+    body {
+        background-color: #000;
+    }
+
+    #container {
+        font-size: 5em;
+        transition-timing-function: linear !important;
+        color: #fff;
+    }
+
+    #ctn {
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<script>
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        console.log({status: this.status, state: this.readyState})
+        if(this.status === 200 && this.readyState === 4) {
+            let text = this.responseText;
+
+            let wpm = 220;
+            // wpm = 150;
+            let wcount = text.split(" ").length;
+
+            let totalTime = ((wcount * 60) / wpm).toFixed(2);
+
+            console.log(totalTime);
+
+            console.log(text);
+            document.getElementById("container").style.transition = "0s";
+            document.getElementById("container").style.transform = "translate(0px, 50px)";
+            document.getElementById("container").innerHTML = text.replace(/\n/gm, "<br/>");
+            window.setTimeout(() => {
+                document.getElementById("container").style.transition = totalTime.toString()+"s";
+                document.getElementById("container").style.transform = "translate(0px, -100%)";
+            }, 1000);
+
+           window.setTimeout(() => {
+                goBack();
+            }, ((parseFloat(totalTime)*1000)+3000));
+        }
+    }
+
+    let goBack = () => {
+        window.location = "/";
+    };
+
+    req.open("POST", "/text?file=<%= name%>", true);
+    req.send();
+
+    document.body.addEventListener("keypress", (evt) => {
+        console.log(evt);
+
+        switch (evt.code.toLowerCase()) {
+            case "keyr":
+                goBack();
+                break;
+        }
+    })
+</script>
