@@ -30,7 +30,7 @@ Go to your server's ip juste like this : `http://<your ip>:3000/`
 
 > **How do I change the speed ?**
 
-This feature is not **yet** implemented, for now, you have to change the speed you will have to 
+This feature is not **yet** implemented, for now, to change the speed you will have to 
 change the value of the `wpm` variable in [text.ejs](https://github.com/vsahler/promptor/blob/main/text.ejs)
 
 ---
